@@ -1,0 +1,125 @@
+<%- include layouts/header.ejs %>
+
+<%
+function convert(str) {
+  var date = new Date(str),
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+    day = ("0" + date.getDate()).slice(-2);
+  return [date.getFullYear(), mnth, day].join("-");
+}
+%>
+
+        <div class="page-data">
+            
+            <form method="post" action="/contacts/edit/<%=data["primary"][0].Contact_id %>">
+
+                <div id="numberOfInputs" style="display: none"></div>
+
+                <div style = "display : none">
+                <input type="text" name="lengthOfAddresses1" value="<%=data["addressList"].length%>">
+                <input type="text" name="lengthOfDates1" value="<%=data["dateList"].length%>">
+                <input type="text" name="lengthOfNumbers1" value="<%=data["phoneList"].length%>">
+                </div>
+
+                <table cellpadding="11">
+                <tr>
+                    <td class="label">First Name</td><td>: <input type="text" name="Fname" value="<%=data["primary"][0].Fname%>" required></td>
+                 </tr>
+                <tr>
+                    <td class="label">Middle Name</td><td>: <input type="text" value="<%=data["primary"][0].Mname%>" name="Mname"></td>
+                 </tr>
+                  <tr>
+                    <td class="label">Last Name</td><td>: <input type="text" name="Lname" value="<%=data["primary"][0].Lname%>"></td>
+                 </tr>
+                </table>
+                <div>
+                               
+                <% if(data["addressList"]){
+                                
+                 for(var i = 0;i < data["addressList"].length ;i++) { %>
+                 
+                <fieldset>
+                 <legend> Address <%=(i+1)%> </legend>
+                    <input type="text" style="display: none" name="<%='Address_id'+i%>" value="<%=data["addressList"][i].Address_id%>"/>
+                    <p> Address Type: <input type="text" name="<%='AddressType'+i%>" value="<%=data["addressList"][i].Address_type%>"/></p>
+                    <p> Address: <input type="text" name="<%='Address'+i%>" value="<%=data["addressList"][i].Address%>"/></p>
+                    <p> City: <input type="text" name="<%='City'+i%>" value="<%=data["addressList"][i].City%>"/></p>
+                    <p> State: <input type="text" name="<%='State'+i%>" value="<%=data["addressList"][i].State%>"/></p>
+                    <p> Zip: <input type="text" name="<%='Zip'+i%>" value="<%=data["addressList"][i].Zip%>"/></p>
+                    <a class="a-inside delete" href= "/address/delete/<%=data["addressList"][i].Address_id %>">Delete Address</a>
+                </fieldset>
+            <% }
+            
+             }else{ %>
+                    <label>No address to display</label>
+                 
+            <% } %>
+                
+                              
+                
+            </div>
+            <div>
+                               
+                <% if(data["dateList"]){
+                                
+                 for(var i = 0;i < data["dateList"].length ;i++) { %>
+                 
+                <fieldset>
+                 <legend> Date <%=(i+1)%> </legend>
+                    <input type="text" style="display: none" name="<%='Date_id'+i%>" value="<%=data["dateList"][i].Date_id%>"/>
+                    <p> Date Type: <input type="text" name="<%='DateType'+i%>" value="<%=data["dateList"][i].Date_type%>"/></p>
+                    <p> Date: <input type="date" name="<%='Date'+i%>" value="<%=convert(data["dateList"][i].Date)%>"/></p>
+                    <a class="a-inside delete" href= "/date/delete/<%=data["dateList"][i].Date_id%>">Delete Date</a>
+                </fieldset>
+            <% }
+            
+             }else{ %>
+                    <label>No Date to display</label>
+                 
+            <% } %>
+                
+                              
+                
+            </div>
+            <div>
+                               
+                <% if(data["phoneList"]){
+                                
+                 for(var i = 0;i < data["phoneList"].length ;i++) { %>
+                 
+                <fieldset>
+                 <legend> Phone <%=(i+1)%> </legend>
+                    <input type="text" style="display: none" name="<%='Phone_id'+i%>" value="<%=data["phoneList"][i].Phone_id%>"/>
+                    <p> Phone Type: <input type="text" name="<%='NumberType'+i%>" value="<%=data["phoneList"][i].Phone_type%>"/></p>
+                    <p> Date: <input type="text" name="<%='AreaCode'+i%>" value="<%=data["phoneList"][i].Area_code%>"/></p>
+                    <p> Phone Type: <input type="text" name="<%='Number'+i%>" value="<%=data["phoneList"][i].Number%>"/></p>
+                    <a class="a-inside delete" href= "/phone/delete/<%=data["phoneList"][i].Phone_id%>">Delete Phone Number</a>
+                </fieldset>
+            <% }
+            
+             }else{ %>
+                    <label>No Phone numbers to display</label>
+                 
+            <% } %>
+                
+            </div>
+            <div>
+            <br><br>
+            <div id="dynamicAddresslist"></div>
+            <div id="dynamicPhonelist"></div>
+            <div id="dynamicDatelist"></div>
+            <br><br>
+            <button class="button" onclick="addAddress()">add Address</button>
+            <button class="button" onclick="addPhoneNumber()">add Phone Number</button>
+            <button class="button" onclick="addDate()">add Date</button>
+            <br><br>
+            </div>
+            <div>
+                <input type="submit" name="submit" value="Save">
+                <input type="button" name="cancel" value="Cancel" class="cancel" onClick="cancelAdd()">
+                    </div>
+            </form>
+            
+        </div>
+        
+<%- include layouts/footer.ejs %>

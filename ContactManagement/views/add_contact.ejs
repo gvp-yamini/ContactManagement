@@ -1,0 +1,33 @@
+<%- include layouts/header.ejs %>
+
+        <div class="page-data">
+            
+            <form method="post" action="/contacts/add">
+                <div id="numberOfInputs" style="display: none"></div>
+                <table cellpadding="11">
+                <tr>
+                    <td>First Name</td><td>: <input type="text" name="Fname" required></td>
+                 </tr>
+                <tr>
+                    <td>Middle Name</td><td>: <input type="text" name="Mname"></td>
+                 </tr>
+                  <tr>
+                    <td>Last Name</td><td>: <input type="text" name="Lname"></td>
+                 </tr>
+                </table>
+
+                <br><br>
+                <div id="dynamicAddresslist"></div>
+                <div id="dynamicPhonelist"></div>
+                <div id="dynamicDatelist"></div>
+                <button class="button" onclick="addAddress()">Add Address</button>
+                <button class="button" onclick="addPhoneNumber()">Add Phone Number</button>
+                <button class="button" onclick="addDate()">Add Date</button>
+                <br><br>
+                <input type="submit" name="submit" value="Save">
+                <input type="button" name="cancel" value="Cancel" class="cancel" onClick="cancelAdd()">
+            </form>
+            
+        </div>
+        
+<%- include layouts/footer.ejs %>
